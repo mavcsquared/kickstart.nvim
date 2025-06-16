@@ -38,6 +38,12 @@ vim.o.breakindent = true
 -- Save undo history
 vim.o.undofile = true
 
+--Change tab to spaces
+vim.opt.expandtab = true -- Use spaces instead of tabs
+vim.opt.shiftwidth = 4 -- Number of spaces for each indent level
+vim.opt.tabstop = 4 -- Number of spaces a <Tab> counts for
+vim.opt.softtabstop = 4 -- Number of spaces when pressing <Tab> in insert mode
+
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -130,6 +136,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
     vim.hl.on_yank()
+  end,
+})
+
+-- Disable auto-comment continuation on newline
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = '*',
+  callback = function()
+    vim.opt_local.formatoptions:remove { 'c', 'r', 'o' }
   end,
 })
 
